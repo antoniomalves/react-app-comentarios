@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import 'bootstrap-css-only'
 
+import base from './base'
+
 import NewComment from './NewComment';
 import Comments from './Comments';
 
@@ -12,21 +14,20 @@ class App extends Component {
 
     this.state = {
       comments:{
-        '1':{
-          comment: 'first comment'
-        },
-        '2':{
-          comment: 'second comment'
-        }
+
       }
     }
+
+    this.refComments = base.syncState('comments', {
+      context: this,
+      state:  'comments'
+    })
+
   }
 
   postNewComment(comment){
 
-    const comments = {
-      ...this.state.comments, comment
-    }
+    const comments = {...this.state.comments}
     const timestamp = Date.now()
     comments[`comm-${timestamp}`] = comment
 
