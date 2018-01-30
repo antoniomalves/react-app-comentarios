@@ -8,7 +8,7 @@ class NewComment extends Component{
   }
 
   handleEnter(event){
-    if(event.which === 13){
+    if(event.keyCode === 13){
       this.props.postNewComment({
         'comment': this.refs.comment.value
       })

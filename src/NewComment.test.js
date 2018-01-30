@@ -16,7 +16,7 @@ describe('<NewComment />', () => {
   it('handles enter', () => {
     const wrapper = mount(<NewComment postNewComment={postNewCommentMock} />)
     const eventMock = {
-      which: 13,
+      keyCode: 13,
       preventDefault: jest.fn()
     }
 
