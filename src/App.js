@@ -12,8 +12,9 @@ class App extends Component {
 
     this.state = {
       comments:{
-
-      }
+      },
+      isLoggedIn: false,
+      user:{}
     }
 
     this.refComments = this.props.base.syncState('comments', {
@@ -34,10 +35,21 @@ class App extends Component {
     })
   }
 
+  auth(provider){
+    console.log(provider)
+  }
+
   render() {
     return (
       <div className="container">
-        <NewComment postNewComment={this.postNewComment} />
+        { this.state.isLoggedIn && <NewComment postNewComment=
+          {this.postNewComment} />
+        }
+        { !this.state.isLoggedIn && 
+          <div className='alert alert-info'>
+            <button onClick={()=> this.auth('facebook')}>Entre com facebook para comentar</button>
+          </div>
+        }
         <Comments comments={this.state.comments} />
       </div>
     )
