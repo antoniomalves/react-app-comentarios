@@ -22,6 +22,14 @@ class App extends Component {
       state:  'comments'
     })
 
+    this.props.auth.onAuthStateChanged((user)=>{
+      if(user){
+        this.setState({ isLoggedIn: true, user })
+      }else{
+        this.setState({ isLoggedIn: false, user: {} })
+      }
+    })
+
   }
 
   postNewComment(comment){
@@ -36,14 +44,19 @@ class App extends Component {
   }
 
   auth(provider){
-    console.log(provider)
+    this.props.auth.signInWithPopup(this.props.providers[provider])
   }
 
   render() {
     return (
       <div className="container">
-        { this.state.isLoggedIn && <NewComment postNewComment=
-          {this.postNewComment} />
+        { this.state.isLoggedIn && 
+        <div>
+          {this.state.user.displayName}
+          <img src={this.state.user.photoURL} alt={this.state.user.displayName} /> <br/>
+          <button onClick={() => this.props.auth.signOut()}>Deslogar</button>
+          <NewComment postNewComment={this.postNewComment} />
+        </div>
         }
         { !this.state.isLoggedIn && 
           <div className='alert alert-info'>
